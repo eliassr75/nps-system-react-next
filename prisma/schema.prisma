@@ -1,0 +1,58 @@
+datasource db {
+  provider = "mysql" // ou "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+model Entity {
+  id          Int           @id @default(autoincrement())
+  cnpj        BigInt        @unique
+  name        String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime?
+  User        User[]
+  Client      Client[]
+  NpsResponse NpsResponse[]
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String
+  password  String
+  entity    Entity    @relation(fields: [entityId], references: [id])
+  entityId  Int
+  role      Role      @default(USER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+}
+
+model Client {
+  id          Int           @id @default(autoincrement())
+  name        String
+  phone       String?
+  entity      Entity        @relation(fields: [entityId], references: [id])
+  entityId    Int
+  createdAt   DateTime      @default(now())
+  NpsResponse NpsResponse[]
+}
+
+model NpsResponse {
+  id        Int      @id @default(autoincrement())
+  score     Int
+  feedback  String?
+  client    Client   @relation(fields: [clientId], references: [id])
+  clientId  Int
+  createdAt DateTime @default(now())
+  Entity    Entity?  @relation(fields: [entityId], references: [id])
+  entityId  Int?
+}
+
+enum Role {
+  USER
+  ADMIN
+}
