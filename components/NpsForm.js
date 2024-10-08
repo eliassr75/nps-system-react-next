@@ -47,7 +47,7 @@ const NpsForm = () => {
               key={num}
               name="score"
               id={`score-${num}`}
-              color={score === num ? 'primary' : 'secondary'} // Muda a cor se o botão estiver selecionado
+              color={score === num ? 'primary' : 'secondary'} // Muda a cor se o botão estiver selecionados
               type='button'
               onClick={() => setScore(num)}
               className='col m-1 mb-1 btn btn-lg border border-1'
