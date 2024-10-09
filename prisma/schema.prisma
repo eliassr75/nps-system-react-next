@@ -12,11 +12,13 @@ model Entity {
   id          Int           @id @default(autoincrement())
   cnpj        BigInt        @unique
   name        String
+  slug        String        @unique
   createdAt   DateTime      @default(now())
   updatedAt   DateTime?
   User        User[]
   Client      Client[]
   NpsResponse NpsResponse[]
+  Survey      Survey[]
 }
 
 model User {
@@ -41,18 +43,34 @@ model Client {
   NpsResponse NpsResponse[]
 }
 
+model Survey {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  enabled     Boolean       @default(true)
+  type        String        @default("minimal")
+  slug        String        @unique
+  entity      Entity        @relation(fields: [entityId], references: [id])
+  entityId    Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime?
+  NpsResponse NpsResponse[]
+}
+
 model NpsResponse {
   id        Int      @id @default(autoincrement())
   score     Int
   feedback  String?
+  createdAt DateTime @default(now())
   client    Client   @relation(fields: [clientId], references: [id])
   clientId  Int
-  createdAt DateTime @default(now())
-  Entity    Entity?  @relation(fields: [entityId], references: [id])
-  entityId  Int?
+  entity    Entity   @relation(fields: [entityId], references: [id])
+  entityId  Int
+  survey    Survey   @relation(fields: [surveyId], references: [id])
+  surveyId  Int
 }
 
 enum Role {
   USER
   ADMIN
+  MASTER
 }
