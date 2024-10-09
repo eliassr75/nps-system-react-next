@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import PasswordManager from "../app_lib/PasswordManager";  // Ajuste na importação
+import PasswordManager from "../app_lib/PasswordManager";  
 import createUniqueRandomSlug from "../app_lib/SlugManager";
 
 const prisma = new PrismaClient();
@@ -8,30 +8,30 @@ export default async function setupEntity() {
   try {
     const responses = await prisma.Entity.findMany();
     
-    // Verifica se não há nenhuma entidade cadastrada
+    
     if (!responses.length) {
 
-      // Criação da entidade
+      
       let slug = await createUniqueRandomSlug();
       const entity = await prisma.Entity.create({
         data: {
           name: "EtecSystems",
-          cnpj: "52545261000190",  // Lembrando que o CNPJ deve ser uma string para evitar perda de precisão
+          cnpj: "52545261000190",  
           slug: slug
         },
       });
       console.info("Master Entity has been created: " + entity.name);
 
-      // Criação do usuário
-      const hashedPassword = await PasswordManager.hash("abc@123");  // Utiliza await para aguardar o hash
+      
+      const hashedPassword = await PasswordManager.hash("abc@123");  
 
       const user = await prisma.User.create({
         data: {
           name: "Elias Craveiro",
           email: "elias@etecsystems.com.br",
-          password: hashedPassword,  // Senha já hashada
+          password: hashedPassword,  
           entityId: entity.id,
-          role: "MASTER",  // Corrigido o papel como string
+          role: "MASTER",  
         },
       });
       console.info("Master user has been created: " + user.name);

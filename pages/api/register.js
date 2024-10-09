@@ -10,7 +10,6 @@ export default async function handler(req, res) {
 
     const { name, email, password } = req.body;
 
-    // Verifica se o email já está cadastrado
     const existingUser = await prisma.user.findUnique({
         where: { email }
     });
@@ -19,10 +18,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ message: 'Usuário já existe com este email' });
     }
 
-    // Hash da senha
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Cria um novo usuário
     const user = await prisma.user.create({
         data: {
             name,

@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export default async function createUniqueRandomSlug(survey = false) {
-    // Função para gerar slug aleatório
+    
     function generateRandomSlug(length = 16) {
         const characters =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -20,7 +20,6 @@ export default async function createUniqueRandomSlug(survey = false) {
     let slug = generateRandomSlug();
     let uniqueSlug = slug;
 
-    // Verifica se o slug já existe no banco de dados
     if(!survey){
         while (
             await prisma.Entity.findUnique({ where: { slug: uniqueSlug } })) {

@@ -2,30 +2,29 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-// Função utilitária para converter BigInt e DateTime
 function serializePrismaResponse(data) {
     return data.map((item) => ({
         ...item,
-        id: item.id.toString(), // Convertendo BigInt para string
-        createdAt: item.createdAt.toISOString(), // Convertendo DateTime para ISO string
+        id: item.id.toString(),
+        createdAt: item.createdAt.toISOString(),
         client: {
             ...item.client,
-            id: item.client.id.toString(), // Convertendo BigInt do cliente
-            createdAt: item.client.createdAt.toISOString(), // Convertendo DateTime para ISO string
-            updatedAt: item.client.updatedAt ? item.client.updatedAt.toISOString(): null, // Se você tiver esse campo também
+            id: item.client.id.toString(),
+            createdAt: item.client.createdAt.toISOString(),
+            updatedAt: item.client.updatedAt ? item.client.updatedAt.toISOString(): null,
         },
         entity: {
             ...item.entity,
-            id: item.entity.id.toString(), // Convertendo BigInt da entidade
-            cnpj: item.entity.id.toString(), // Convertendo BigInt da entidade
-            createdAt: item.entity.createdAt.toISOString(), // Convertendo DateTime para ISO string
-            updatedAt: item.entity.updatedAt ? item.entity.updatedAt.toISOString(): null, // Se você tiver esse campo também
+            id: item.entity.id.toString(),
+            cnpj: item.entity.id.toString(),
+            createdAt: item.entity.createdAt.toISOString(),
+            updatedAt: item.entity.updatedAt ? item.entity.updatedAt.toISOString(): null,
         },
         survey: {
             ...item.survey,
-            id: item.survey.id.toString(), // Convertendo BigInt da pesquisa
-            createdAt: item.survey.createdAt.toISOString(), // Convertendo DateTime para ISO string
-            updatedAt: item.survey.updatedAt ? item.survey.updatedAt.toISOString(): null, // Se você tiver esse campo também
+            id: item.survey.id.toString(),
+            createdAt: item.survey.createdAt.toISOString(),
+            updatedAt: item.survey.updatedAt ? item.survey.updatedAt.toISOString(): null,
         }
     }));
 }
@@ -41,7 +40,6 @@ export default async function handler(req, res) {
                 },
             });
 
-            // Convertemos os dados do Prisma para uma forma serializável
             const serializedResponses = serializePrismaResponse(responses);
 
             return res.status(200).json(serializedResponses);

@@ -18,7 +18,7 @@ const Login = () => {
         });
 
         if (res.ok) {
-            router.push('/admin/'); // Redireciona para o painel administrativo
+            router.push('/admin/');
         } else {
             const data = await res.json();
             alert(data.message || 'Erro ao fazer login');

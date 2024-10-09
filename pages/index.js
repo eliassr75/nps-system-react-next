@@ -1,19 +1,19 @@
 import setupEntity from '../setup/setupEntity';
 
 export async function getServerSideProps(context) {
-  // Supondo que setupEntity seja uma função assíncrona que retorna a entidade
+  
   const entity = await setupEntity();
 
   if (entity) {
     return {
       redirect: {
-        destination: `/${entity.slug}`, // Redireciona para a página do slug da entidade
-        permanent: false, // Define se o redirecionamento é temporário ou permanente
+        destination: `/${entity.slug}`, 
+        permanent: false, 
       },
     };
   }
 
-  // Se não houver entidade, definir status de resposta 403 (Forbidden)
+  
   context.res.statusCode = 403;
   return {
     props: {
@@ -33,28 +33,28 @@ export default function Home({ errorMessage }) {
   );
 }
 
-// Estilos para centralizar o conteúdo
+
 const styles = {
   container: {
     display: 'flex',
-    justifyContent: 'center', // Centraliza horizontalmente
-    alignItems: 'center', // Centraliza verticalmente
-    height: '100vh', // Define a altura para 100% da viewport
-    backgroundColor: '#f0f0f0', // Fundo cinza claro para destacar a mensagem
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    height: '100vh', 
+    backgroundColor: '#f0f0f0', 
   },
   content: {
-    textAlign: 'center', // Alinha o texto no centro
+    textAlign: 'center', 
     padding: '20px',
-    backgroundColor: '#fff', // Fundo branco para o aviso
-    borderRadius: '8px', // Bordas arredondadas
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Sombra para dar destaque
+    backgroundColor: '#fff', 
+    borderRadius: '8px', 
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
   },
   heading: {
     fontSize: '2rem',
-    color: '#ff0000', // Cor vermelha para o título de erro
+    color: '#ff0000', 
   },
   message: {
     fontSize: '1.2rem',
-    color: '#333', // Cor cinza para o texto da mensagem
+    color: '#333', 
   },
 };

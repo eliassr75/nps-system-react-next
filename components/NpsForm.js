@@ -18,7 +18,6 @@ const NpsForm = () => {
     const [phone, setPhone] = useState("");
     const [feedback, setFeedback] = useState("");
 
-    // Verifica se o cookie de bloqueio existe
     Cookies.remove("lastNpsResponseDate");
     const lastResponseDate = Cookies.get("lastNpsResponseDate");
     if (lastResponseDate) {
@@ -74,11 +73,11 @@ const NpsForm = () => {
                 name,
                 phone,
                 feedback,
-            }), // Usar surveyId
+            }),
         });
 
         if (response.ok) {
-            // Define o cookie com a data atual ao enviar a avaliação com sucesso
+            
             Cookies.set("lastNpsResponseDate", new Date().toISOString(), {
                 expires: 90,
             });
@@ -93,7 +92,7 @@ const NpsForm = () => {
         <MDBContainer>
             <form className="mt-5" onSubmit={handleSubmit}>
                 <h1>Avaliação NPS - {entityObj ? entityObj.name : "Carregando..."}</h1>
-                {surveyId === null ? ( // Verifica se a pesquisa não foi encontrada
+                {surveyId === null ? (
                     <p>
                         Não foi encontrada nenhuma pesquisa disponível para esta
                         entidade.
@@ -124,7 +123,7 @@ const NpsForm = () => {
                                                 </MDBBtn>
                                             );
                                         }
-                                        return null; // Retorna null se num for 0
+                                        return null;
                                     })}
                                 </>
                             ) : (
