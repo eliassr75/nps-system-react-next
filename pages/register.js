@@ -1,5 +1,33 @@
 import { useState } from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle } from "mdb-react-ui-kit";
+import {
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBInput,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardTitle,
+} from "mdb-react-ui-kit";
+
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const token = req.cookies.token; // Coletando o token do cookie
+
+    // Verifica se o token existe
+    if (token) {
+        return {
+            redirect: {
+                destination: "/admin",
+                permanent: false,
+            },
+        };
+    }
+
+    return {
+        props: {}, // Retornando props vazias
+    };
+}
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -8,19 +36,19 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const res = await fetch('/api/register', {
-            method: 'POST',
+        const res = await fetch("/api/register", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({ name, email, password }),
         });
 
         const data = await res.json();
         if (res.ok) {
-            alert('Usuário registrado com sucesso');
+            alert("Usuário registrado com sucesso");
         } else {
-            alert(data.message || 'Erro ao registrar');
+            alert(data.message || "Erro ao registrar");
         }
     };
 
@@ -30,7 +58,9 @@ const Register = () => {
                 <MDBCol md="6">
                     <MDBCard>
                         <MDBCardBody>
-                            <MDBCardTitle className="text-center">Registrar</MDBCardTitle>
+                            <MDBCardTitle className="text-center">
+                                Registrar
+                            </MDBCardTitle>
                             <form onSubmit={handleRegister}>
                                 <MDBInput
                                     label="Nome"
@@ -52,7 +82,9 @@ const Register = () => {
                                     label="Senha"
                                     type="password"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
                                     required
                                     className="mb-4"
                                 />
