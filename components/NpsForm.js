@@ -18,7 +18,7 @@ const NpsForm = () => {
     const [phone, setPhone] = useState("");
     const [feedback, setFeedback] = useState("");
 
-    Cookies.remove("lastNpsResponseDate");
+    //Cookies.remove("lastNpsResponseDate");
     const lastResponseDate = Cookies.get("lastNpsResponseDate");
     if (lastResponseDate) {
         const differenceInDays =
