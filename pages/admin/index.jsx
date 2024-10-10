@@ -38,15 +38,16 @@ const Dashboard = () => {
         <MDBContainer className="my-5">
             <NavBar />
             <MDBCard>
-                <MDBCardBody className="table-responsive">
+                <MDBCardBody>
                     <h1 className="mb-4">
                         Dashboard de Avaliações NPS -{" "}
                         {entityObj ? entityObj.name : "Carregando..."}
                     </h1>
-                    <MDBTable align="middle">
+                    <MDBTable align="middle" small responsive>
                         <MDBTableHead>
                             <tr>
                                 <th scope="col">ID</th>
+                                <th scope="col">Pesquisa</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Nota</th>
                                 <th scope="col">Feedback</th>
@@ -58,6 +59,7 @@ const Dashboard = () => {
                                 responses.map((response) => (
                                     <tr key={response.id}>
                                         <td>{response.id}</td>
+                                        <td>{response.survey.name}</td>
                                         <td>
                                             {response.client.name}{" "}
                                             {response.client.phone

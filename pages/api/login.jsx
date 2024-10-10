@@ -27,7 +27,8 @@ export default async function handler(req, res) {
 
     const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
 
+    // Definir o token no cookie
     res.setHeader('Set-Cookie', `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Strict;`);
-
-    return res.status(200).json({ message: 'Login bem-sucedido' });
+    
+    return res.status(200).json({ message: 'Login bem-sucedido', user });
 }
